@@ -34,7 +34,7 @@ services:
     volumes:
       - ../anunnakis-backend:/usr/src/app
     command: npm run dev
-    hostname: backend.sosecommerce.$DOMAIN
+    hostname: backend.soscommerce.$DOMAIN
     dns: $DNS_IP
 
   web:
@@ -45,7 +45,7 @@ services:
     volumes:
       - ../anunnakis-frontend:/usr/src/app
     command: npm start
-    hostname: panel.sosecommerce.$PUBLIC_DOMAIN
+    hostname: panel.soscommerce.$PUBLIC_DOMAIN
     dns: $DNS_IP
 
 networks:
