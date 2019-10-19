@@ -1,0 +1,56 @@
+version: '3.5'
+services:
+  dns:
+    image: defreitas/dns-proxy-server
+    ports:
+      - 5380:5380
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/resolv.conf:/etc/resolv.conf
+    environment:
+      - MG_LOG_FILE=false
+      - MG_LOG_LEVEL=ERROR
+      - MG_REGISTER_CONTAINER_NAMES=1
+    networks:
+      default:
+        ipv4_address: $DNS_IP
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    hostname: mysql.res.$DOMAIN
+    dns: $DNS_IP
+
+  api:
+    image: node:10
+    working_dir: /usr/src/app
+    environment:
+      - APP_PORT=80
+      - NODE_ENV=development
+    volumes:
+      - ../anunnakis-backend:/usr/src/app
+    command: npm run dev
+    hostname: backend.$DOMAIN
+    dns: $DNS_IP
+
+  web:
+    image: node:10
+    working_dir: /usr/src/app
+    environment:
+      - PORT=80
+    volumes:
+      - ../anunnakis-frontend:/usr/src/app
+    command: npm start
+    hostname: panel.$PUBLIC_DOMAIN
+    dns: $DNS_IP
+
+networks:
+  default:
+    name: $COMPOSE_PROJECT_NAME
+    ipam:
+      config:
+        - subnet: $NETWORK_CIDR
