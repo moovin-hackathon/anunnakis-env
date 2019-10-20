@@ -16,7 +16,7 @@ services:
         ipv4_address: $DNS_IP
 
   mysql:
-    image: mysql:8.0
+    image: mysql:5.7
     volumes:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
