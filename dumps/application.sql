@@ -129,6 +129,35 @@ LOCK TABLES `module_configuration` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notification` (
+  `id` char(36) NOT NULL,
+  `identifier` varchar(45) NOT NULL,
+  `type` enum('VARIATION') NOT NULL,
+  `code` varchar(45) NOT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `viewed` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+INSERT INTO `notification` VALUES ('75dbb653-27b7-46b8-a1d5-319a4a5f0f1a','LOW_SALES','VARIATION','5022','Seu produto está com poucas vendas.','2019-10-19 10:30:00',0),('a07738ac-a2f9-4054-bee9-5a68742e8a04','LOW_STOCK_QUANTITY','VARIATION','5021','Seu produto está vendendo bastante.','2019-10-19 10:30:00',0);
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `product`
 --
 
@@ -253,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-19 23:44:37
+-- Dump completed on 2019-10-20  1:45:36
